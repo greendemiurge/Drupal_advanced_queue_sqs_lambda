@@ -8,26 +8,27 @@ on:
         required: true
         default: 'v0.0.1'
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }} # or use a PAT secret if needed
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Docker image
         run: |
-          echo "Building image with tag ${{ github.event.inputs.tag }}"
-          docker build --platform linux/amd64 \
-            -t ghcr.io/${{ github.repository_owner }}/drupal-advanced-queue-lambda:${{ github.event.inputs.tag }} .
+          docker build -t ghcr.io/${{ github.repository_owner }}/drupal-advanced-queue-lambda:${{ github.event.inputs.tag }} .
 
       - name: Push Docker image
         run: |
