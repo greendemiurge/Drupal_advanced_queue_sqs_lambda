@@ -1,0 +1,7 @@
+services:
+  lambda_base:
+    image: lambda_base:deploy
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile

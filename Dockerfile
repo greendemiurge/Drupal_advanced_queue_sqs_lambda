@@ -1,8 +1,5 @@
-# Set Bref version as a build argument (e.g., 82 for PHP 8.2)
-ARG BREF_VERSION=83
-
 # Use Bref's dev base for the CLI Lambda runtime
-FROM bref/php-${BREF_VERSION}:3 AS lambda
+FROM bref/php-83-dev AS lambda
 
 COPY 99-overrides.ini /opt/bref/etc/php/conf.d/
 
