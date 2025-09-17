@@ -54,4 +54,4 @@ Examples:
 - Logs from Lambda (e.g., cold start boot messages, missing modules) will appear in CloudWatch; search for lines starting with [Lambda].
 
 ## License
-This repository is provided as-is. Use at your own discretion within your organization’s policies.
+This project is licensed under the [MIT License](license.txt). See the LICENSE file for details.
