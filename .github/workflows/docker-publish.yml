@@ -1,9 +1,12 @@
 name: Build and Publish Docker Image
 
 on:
-  push:
-    tags:
-      - 'v*'  # trigger only on tags like v1.0.0, v2.3.1, etc.
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Docker image tag'
+        required: true
+        default: 'v0.0.1'
 
 jobs:
   build-and-publish:
@@ -18,13 +21,14 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }} # or use a PAT secret if needed
 
       - name: Build Docker image
         run: |
-          echo "Building image for tag $GITHUB_REF_NAME"
-          docker build -t ghcr.io/${{ github.repository_owner }}/drupal-advanced-queue-lambda:${GITHUB_REF_NAME} .
+          echo "Building image with tag ${{ github.event.inputs.tag }}"
+          docker build --platform linux/amd64 \
+            -t ghcr.io/${{ github.repository_owner }}/drupal-advanced-queue-lambda:${{ github.event.inputs.tag }} .
 
       - name: Push Docker image
         run: |
-          docker push ghcr.io/${{ github.repository_owner }}/drupal-advanced-queue-lambda:${GITHUB_REF_NAME}
+          docker push ghcr.io/${{ github.repository_owner }}/drupal-advanced-queue-lambda:${{ github.event.inputs.tag }}

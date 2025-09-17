@@ -16,7 +16,7 @@ Typical workflow:
 Create a Dockerfile in your project (or update an existing one) that uses this base image and copies your code. The essential instructions are:
 
 ```
-FROM ******* AS lambda
+FROM ghcr.io/greendemiurge/drupal-advanced-queue-lambda:v83.0.0 AS lambda
 ENV PROJECT_ROOT=/var/task
 ENV DRUPAL_ROOT=/var/task/web
 ENV PATH="${PATH}:/var/task/vendor/bin"
